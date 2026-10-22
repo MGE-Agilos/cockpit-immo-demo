@@ -221,6 +221,7 @@ function chart(id, cfg) {
   if (!window.Chart) { el.parentElement.innerHTML = '<p class="muted small">Graphique indisponible hors connexion (Chart.js).</p>'; return; }
   Chart.defaults.font.family = '"Plus Jakarta Sans",system-ui,sans-serif';
   Chart.defaults.color = css('--muted');
+  if (/[?&]capture\b/.test(location.search)) Chart.defaults.animation = false;   // captures d'écran du guide
   CHARTS.push(new Chart(el, cfg));
 }
 const nowMarker = (getIndex, label = 'Aujourd’hui') => ({
@@ -503,7 +504,7 @@ function tCharges(b) {
     ['Charges annuelles', eur(b.chargesBase * Q), `${eur(b.chargesBase / 12 * Q)} par mois, hors crédit`, 'receipt', '--c2'],
     ['Fiscalité', eur(fisc * Q), 'Précompte, impôts et taxes locales', 'bank', '--c5'],
     ['Revenu cadastral', eur(b.rc), `Non indexé · indexé ${TY} ≈ ${eur(b.rc * 2.2)}`, 'doc', '--c1'],
-    ['Assurances', eur(b.charges.filter(c => c.cat === 'Assurances').reduce((s, c) => s + c.annuel, 0) * Q), 'Habitation, RC et solde restant dû', 'shield', '--c4']].map(kpi).join('')}
+    ['Assurances', eur(b.charges.filter(c => c.cat === 'Assurances').reduce((s, c) => s + c.annuel, 0) * Q), 'Habitation, RC et solde restant dû', 'shield', '--c4']].map(kpi).join('')}</div>
   <div class="grid k21" style="margin-top:16px">
     <div class="card tw"><span class="ctitle">Détail des charges</span><table style="margin-top:6px"><thead><tr><th>Poste</th><th>Catégorie</th><th class="n">Par mois</th><th class="n">Par an</th></tr></thead><tbody>
       ${b.charges.map(c => `<tr><td>${esc(c.poste)}</td><td><span class="tag">${esc(c.cat)}</span></td><td class="n">${eur(c.annuel / 12 * Q, 2)}</td><td class="n">${eur(c.annuel * Q)}</td></tr>`).join('')}
@@ -519,7 +520,7 @@ function tEntretien(b) {
   return `<div class="grid k3">${[
     ['Travaux réalisés', eur(fait * Q), `Depuis ${b.T0.getFullYear()}`, 'tool', '--c2'],
     ['Travaux à venir', eur(avenir * Q), 'Prévus, en cours ou au stade du devis', 'cal', '--c4'],
-    ['Certificat PEB', `Classe ${esc(b.peb.classe)}`, `${b.peb.valeur} kWh/m².an · valable jusqu’au ${fdate(b.peb.validite)}`, 'sun', '--c3']].map(kpi).join('')}
+    ['Certificat PEB', `Classe ${esc(b.peb.classe)}`, `${b.peb.valeur} kWh/m².an · valable jusqu’au ${fdate(b.peb.validite)}`, 'sun', '--c3']].map(kpi).join('')}</div>
   <h3>Certificats, contrôles et obligations</h3><div class="card tw"><table><thead><tr><th>Document</th><th>Détail</th><th>Dernier</th><th>Échéance</th><th>Statut</th></tr></thead><tbody>
     ${[...b.certificats].sort((x, y) => x.echeance.localeCompare(y.echeance)).map(c => { const [s, l] = certStatus(c.echeance); return `<tr><td><b>${esc(c.type)}</b></td><td class="small muted">${esc(c.detail)}</td><td class="small">${fdate(c.date)}</td><td class="small">${fdate(c.echeance)}</td><td><span class="st ${s}">${l}</span></td></tr>`; }).join('')}</tbody></table></div>
   <h3>Travaux et investissements</h3><div class="card tw"><table><thead><tr><th>Date</th><th>Objet</th><th>Entreprise</th><th class="n">Montant</th><th>Statut</th></tr></thead><tbody>
@@ -623,12 +624,28 @@ function viewDocs() {
   return `<div class="head"><div><h1>Coffre-fort documents</h1><p class="lead">${ALL_DOCS.length} documents classés par bien et par catégorie : actes, crédits, baux, certificats, assurances, fiscalité.</p></div><span class="demo">${ic('shield')} Stockage chiffré · accès partagé avec votre conseillère</span></div>${docShell(true)}`;
 }
 
+/* ---------- guide d'utilisation (contenu dans guide.js) ---------- */
+function viewGuide() {
+  const G = window.GUIDE;
+  if (!G) return '<p class="muted">Guide indisponible (guide.js non chargé).</p>';
+  const fig = ([f, cap], mob) => `<figure class="${mob ? 'mob' : ''}"><img src="guide/${f}.jpg" alt="${esc(cap)}" loading="lazy" data-act="zoom" data-cap="${esc(cap)}"><figcaption>${esc(cap)}</figcaption></figure>`;
+  return `<div class="head"><div><h1>Guide d’utilisation</h1><p class="lead">${esc(G.intro)}</p></div><button class="btn" data-act="print">${ic('print')} Imprimer le guide</button></div>
+    <div class="card toc no-print"><span class="ctitle">Sommaire</span><div class="tocg">${G.sections.map((s, i) => `<button data-act="goto" data-id="${s.id}">${ic(s.icone)}<span><small>${i + 1}</small>${esc(s.titre)}</span></button>`).join('')}<button data-act="goto" data-id="faq">${ic('info')}<span><small>?</small>Questions fréquentes</span></button></div>
+      <div class="note">Ce guide décrit l’utilisation en situation réelle. Les encadrés <span class="demo">Démo</span> signalent ce qui est simulé dans la version de démonstration.</div></div>
+    ${G.sections.map((s, i) => `<section class="gsec" id="g-${s.id}"><h2><span class="num">${i + 1}</span>${esc(s.titre)}</h2><div class="gtxt">${s.texte}</div>
+      ${s.astuce ? `<div class="tip">${ic('sun')}<div><b>Astuce</b> ${esc(s.astuce)}</div></div>` : ''}
+      ${s.demo ? `<div class="tip dm">${ic('info')}<div><b>Démo</b> ${esc(s.demo)}</div></div>` : ''}
+      <div class="gimgs ${s.mobile ? 'mob' : ''}">${s.images.map(x => fig(x, s.mobile)).join('')}</div></section>`).join('')}
+    <section class="gsec" id="g-faq"><h2><span class="num">?</span>Questions fréquentes</h2>${G.faq.map(([qq, r]) => `<details class="card faq"><summary>${esc(qq)}</summary><p>${esc(r)}</p></details>`).join('')}</section>`;
+}
+
 /* ---------- coquille : navigation, modales ---------- */
 function route() {
   const p = location.hash.replace(/^#\/?/, '').split('/');
   if (p[0] === 'bien' && byId(p[1])) return { v: 'bien', id: p[1], tab: p[2] || 'synthese' };
   if (p[0] === 'simulateur') return { v: 'sim' };
   if (p[0] === 'documents') return { v: 'docs' };
+  if (p[0] === 'guide') return { v: 'guide' };
   return { v: 'home' };
 }
 function renderSide(r) {
@@ -638,12 +655,13 @@ function renderSide(r) {
     <a href="#/" class="${r.v === 'home' ? 'on' : ''}">${ic('grid')} Vue d’ensemble</a>
     <a href="#/simulateur" class="${r.v === 'sim' ? 'on' : ''}">${ic('sliders')} Simulateur</a>
     <a href="#/documents" class="${r.v === 'docs' ? 'on' : ''}">${ic('doc')} Documents <span class="cnt">${ALL_DOCS.length}</span></a>
+    <a href="#/guide" class="${r.v === 'guide' ? 'on' : ''}">${ic('info')} Guide d’utilisation</a>
     <div class="navlbl">Mes biens</div>
     ${BIENS.map(b => { const h = b.alertes.filter(a => a.niveau === 'haut').length; return `<a href="#/bien/${b.id}" class="${r.id === b.id ? 'on' : ''}"><span class="dot" style="background:var(${b.couleur})"></span>${esc(b.nom)}${h ? `<span class="badge">${h}</span>` : `<span class="cnt">${eurk(b.valeur(TODAY) * q(b))}</span>`}</a>`; }).join('')}
     <div class="adv"><div class="row"><div class="av">${initials(A.nom)}</div><div><span>Votre conseillère</span><b>${esc(A.nom)}</b></div></div>
       <div class="btns"><button data-act="advisor">${ic('chat')} Contacter</button><button class="ic" data-act="theme" aria-label="Changer de thème">${ic('moon')}</button></div></div>`;
   $('#topbar').innerHTML = `<div class="logo" style="width:32px;height:32px;font-size:14px;border-radius:9px">${esc(M.societe[0])}</div><b>${esc(M.produit)}</b><span class="sp"></span><button data-act="theme" aria-label="Changer de thème">${ic('moon')}</button><button data-act="advisor" aria-label="Contacter la conseillère">${ic('chat')}</button>`;
-  $('#bottombar').innerHTML = [['#/', 'grid', 'Accueil', r.v === 'home'], [null, 'home', 'Biens', r.v === 'bien'], ['#/simulateur', 'sliders', 'Simulateur', r.v === 'sim'], ['#/documents', 'doc', 'Documents', r.v === 'docs']]
+  $('#bottombar').innerHTML = [['#/', 'grid', 'Accueil', r.v === 'home'], [null, 'home', 'Biens', r.v === 'bien'], ['#/simulateur', 'sliders', 'Simulateur', r.v === 'sim'], ['#/documents', 'doc', 'Documents', r.v === 'docs'], ['#/guide', 'info', 'Aide', r.v === 'guide']]
     .map(([h, i, l, on]) => h ? `<a href="${h}" class="${on ? 'on' : ''}">${ic(i)}${l}</a>` : `<a href="#" data-act="biens" class="${on ? 'on' : ''}">${ic(i)}${l}</a>`).join('');
 }
 let lastRoute = '';
@@ -651,14 +669,14 @@ function render() {
   CHARTS.forEach(c => c.destroy()); CHARTS = []; AFTER = [];
   const r = route(), key = location.hash;
   renderSide(r);
-  $('#main').innerHTML = r.v === 'bien' ? viewBien(byId(r.id), r.tab) : r.v === 'sim' ? viewSim() : r.v === 'docs' ? viewDocs() : viewHome();
-  document.title = `${D.marque.produit} · ${r.v === 'bien' ? byId(r.id).nom : r.v === 'sim' ? 'Simulateur' : r.v === 'docs' ? 'Documents' : `${D.client.prenom} ${D.client.nom}`}`;
+  $('#main').innerHTML = r.v === 'bien' ? viewBien(byId(r.id), r.tab) : r.v === 'sim' ? viewSim() : r.v === 'docs' ? viewDocs() : r.v === 'guide' ? viewGuide() : viewHome();
+  document.title = `${D.marque.produit} · ${r.v === 'bien' ? byId(r.id).nom : r.v === 'sim' ? 'Simulateur' : r.v === 'docs' ? 'Documents' : r.v === 'guide' ? 'Guide' : `${D.client.prenom} ${D.client.nom}`}`;
   AFTER.forEach(f => f());
   if (key !== lastRoute) { window.scrollTo(0, 0); lastRoute = key; }
 }
 
 const modal = html => { $('#modalbox').innerHTML = html; $('#modal').classList.add('on'); };
-const closeModal = () => $('#modal').classList.remove('on');
+const closeModal = () => { $('#modal').classList.remove('on'); $('#modalbox').classList.remove('wide'); };
 let tt; const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2800); };
 function openAdvisor() {
   const A = D.conseiller;
@@ -689,6 +707,8 @@ document.addEventListener('click', e => {
   else if (a === 'advisor') openAdvisor();
   else if (a === 'biens') { e.preventDefault(); openBiens(); }
   else if (a === 'close') closeModal();
+  else if (a === 'goto') document.getElementById('g-' + t.dataset.id)?.scrollIntoView({ behavior: 'smooth' });
+  else if (a === 'zoom') { modal(`<img src="${esc(t.getAttribute('src'))}" alt="" style="width:100%;border-radius:12px;display:block"><div class="small muted" style="margin:10px 4px 2px">${esc(t.dataset.cap)}</div>`); $('#modalbox').classList.add('wide'); }
   else if (a === 'doc') toast(`« ${t.dataset.n} » — document fictif de la démo`);
   else if (a === 'upload') toast('Démo : l’ajout de documents (glisser-déposer, scan) sera disponible dans la version complète');
   else if (a === 'docf') { DOCF[t.dataset.k] = t.dataset.v; renderDocList(); }

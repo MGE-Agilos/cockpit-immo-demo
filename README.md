@@ -10,6 +10,10 @@ Ouvrir `index.html` (double-clic). Une connexion Internet est nécessaire pour l
 - `app.js` : calculs (amortissement, valorisation, loyers, bilans), navigation, vues, graphiques, illustrations SVG des biens.
 - `index.html` : mise en page et styles (thème clair/sombre, mobile, impression).
 
+## Guide d’utilisation
+Menu « Guide d’utilisation » (ou « Aide » sur smartphone) : guide destiné aux clients finaux, organisé par écran et par situation réelle, avec captures et FAQ. Le texte est dans `guide.js`, les captures dans `guide/`.
+Après une modification de l’app, régénérer les captures : `node outils/captures-guide.mjs "<dossier de l’app>" "<dossier de l’app>/guide" "<dossier temporaire>"` (nécessite Chrome et Node 22+).
+
 ## Photos
 Photos d’illustration issues de Wikimedia Commons (dossier `photos/`), sans lien avec les biens fictifs. Le crédit est affiché sur chaque photo, comme l’exigent les licences :
 - `uccle.jpg` — charles lecompte, CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Uccle_avenue_Dupuich_Villas_contemporaines_-_panoramio.jpg
