@@ -2,14 +2,14 @@
    Destiné aux clients : chaque section = un écran ou un besoin, avec une capture (dossier guide/).
    « demo » : précision sur ce qui est simulé dans la version de démonstration. */
 window.GUIDE = {
-  intro: "Cockpit Immo rassemble en un seul endroit tout ce qui concerne vos biens immobiliers : leur valeur, vos crédits, vos locations, vos charges, vos échéances et vos documents. Votre conseillère y a accès avec vous : vous parlez des mêmes chiffres. Ce guide explique comment l’utiliser au quotidien.",
+  intro: "Cockpit Immo rassemble en un seul endroit tout ce qui concerne vos biens immobiliers : leur valeur, vos crédits, vos locations, vos charges, vos échéances et vos documents. Votre gestionnaire y a accès avec vous : vous parlez des mêmes chiffres. Ce guide explique comment l’utiliser au quotidien.",
 
   sections: [
     {
       id: "demarrer", titre: "Premiers pas", icone: "info",
       texte: `<p>Vous accédez à Cockpit Immo depuis votre espace client, sur ordinateur, tablette ou smartphone. Aucune installation n’est nécessaire.</p>
         <ul>
-          <li><b>Qui remplit les données ?</b> Lors de la mise en place, votre conseillère encode vos biens à partir de vos actes, contrats de crédit, baux et avertissements-extraits de rôle. Ensuite, chaque nouveau document que vous déposez met le dossier à jour.</li>
+          <li><b>Qui remplit les données ?</b> Lors de la mise en place, votre gestionnaire encode vos biens à partir de vos actes, contrats de crédit, baux et avertissements-extraits de rôle. Ensuite, chaque nouveau document que vous déposez met le dossier à jour.</li>
           <li><b>La navigation :</b> le menu de gauche (ou la barre du bas sur smartphone) donne accès à la vue d’ensemble, au simulateur, aux documents et à chacun de vos biens.</li>
           <li><b>Le bouton Foyer / Ma part</b> (en haut à droite) permet de voir les chiffres pour l’ensemble du ménage, ou uniquement votre quote-part dans les biens détenus en indivision.</li>
           <li><b>Le mode sombre</b> s’active avec l’icône de lune, en bas du menu.</li>
@@ -41,11 +41,11 @@ window.GUIDE = {
         <ul>
           <li><span class="st bad">Urgent</span> : à traiter maintenant, il y a un impact financier ou légal.</li>
           <li><span class="st warn">À suivre</span> : une échéance approche dans les prochains mois.</li>
-          <li><span class="st info">Info</span> : une opportunité ou un point à discuter avec votre conseillère.</li>
+          <li><span class="st info">Info</span> : une opportunité ou un point à discuter avec votre gestionnaire.</li>
         </ul>
         <p>L’<b>agenda</b> liste les prochaines échéances de tous vos biens (assemblées générales, entretiens obligatoires, dates limites de préavis…) et les derniers événements.</p>`,
       images: [["alertes", "Les points d’attention, triés par urgence, et l’agenda de vos biens."]],
-      astuce: "Chaque alerte explique ce qu’il faut faire. En cas de doute, préparez-la pour votre prochain rendez-vous : elle apparaît aussi chez votre conseillère."
+      astuce: "Chaque alerte explique ce qu’il faut faire. En cas de doute, préparez-la pour votre prochain rendez-vous : elle apparaît aussi chez votre gestionnaire."
     },
     {
       id: "fiche", titre: "La fiche d’un bien", icone: "doc",
@@ -99,12 +99,12 @@ window.GUIDE = {
         <p><b>Situation réelle : vous pensez revendre un bien.</b> Choisissez le bien et l’année : le simulateur estime le prix, déduit le capital restant dû, l’indemnité de remploi de la banque, les frais de vente et l’éventuelle taxe sur la plus-value, puis affiche les liquidités récupérées.</p>
         <p><b>Situation réelle : vous envisagez un nouvel achat.</b> Encodez le prix, l’apport, le taux, la durée et le loyer attendu : vous obtenez la mensualité, le cash-flow, le rendement et l’impact sur votre endettement global.</p>`,
       images: [["simulateur", "La projection du patrimoine et les chiffres à la retraite."], ["revente", "La simulation de revente et celle d’un nouvel investissement locatif."]],
-      astuce: "Les résultats sont des estimations indicatives. Avant toute décision, validez le scénario avec votre conseillère : elle tiendra compte de votre fiscalité personnelle et de votre situation familiale."
+      astuce: "Les résultats sont des estimations indicatives. Avant toute décision, validez le scénario avec votre gestionnaire, qui tiendra compte de votre fiscalité personnelle et de votre situation familiale."
     },
     {
-      id: "conseillere", titre: "Contacter votre conseillère", icone: "chat",
-      texte: `<p>Le bouton <b>Contacter</b> (en bas du menu, ou en haut de la vue d’ensemble) affiche les coordonnées de votre conseillère et la date de votre prochain rendez-vous. Vous pouvez demander un rendez-vous en choisissant un sujet : revue annuelle, financement d’un nouveau bien, revente, fiscalité, succession et donation.</p>
-        <p>Votre conseillère voit le même tableau de bord que vous : inutile de rassembler vos papiers avant le rendez-vous.</p>`,
+      id: "conseillere", titre: "Contacter votre gestionnaire", icone: "chat",
+      texte: `<p>Le bouton <b>Contacter</b> (en bas du menu, ou en haut de la vue d’ensemble) affiche les coordonnées de votre gestionnaire et la date de votre prochain rendez-vous. Vous pouvez demander un rendez-vous en choisissant un sujet : revue annuelle, financement d’un nouveau bien, revente, fiscalité, succession et donation.</p>
+        <p>Votre gestionnaire voit le même tableau de bord que vous : inutile de rassembler vos papiers avant le rendez-vous.</p>`,
       images: [["conseiller", "La fenêtre de contact et de demande de rendez-vous."]],
       demo: "Dans cette démo, la demande de rendez-vous n’est pas réellement envoyée."
     },
@@ -118,10 +118,10 @@ window.GUIDE = {
   ],
 
   faq: [
-    ["D’où vient la valeur estimée de mes biens ?", "Elle part du prix d’achat et suit l’évolution des prix du marché dans votre commune. Elle est revue lors de chaque revue annuelle avec votre conseillère. C’est une estimation, pas une expertise : en cas de vente ou de succession, une expertise reste nécessaire."],
+    ["D’où vient la valeur estimée de mes biens ?", "Elle part du prix d’achat et suit l’évolution des prix du marché dans votre commune. Elle est revue lors de chaque revue annuelle avec votre gestionnaire. C’est une estimation, pas une expertise : en cas de vente ou de succession, une expertise reste nécessaire."],
     ["À quelle fréquence les chiffres sont-ils mis à jour ?", "Le capital restant dû, les loyers et les échéances sont recalculés chaque mois. Les montants changent aussi dès qu’un nouveau document est déposé : nouveau bail, extrait de compte de crédit, avertissement-extrait de rôle…"],
-    ["Une information est inexacte, que faire ?", "Signalez-la à votre conseillère via le bouton Contacter, en joignant si possible le document qui fait foi. La correction apparaît dans votre tableau de bord."],
+    ["Une information est inexacte, que faire ?", "Signalez-la à votre gestionnaire via le bouton Contacter, en joignant si possible le document qui fait foi. La correction apparaît dans votre tableau de bord."],
     ["Pourquoi mon solde mensuel est-il négatif alors que mes biens sont loués ?", "Le solde mensuel déduit la totalité de vos mensualités, y compris le capital remboursé. Or ce capital n’est pas une dépense : c’est de l’épargne qui augmente votre patrimoine net. Le bilan annuel de chaque bien montre cet « enrichissement »."],
-    ["Mes données sont-elles en sécurité ?", "Vos données et documents sont stockés de manière chiffrée et ne sont accessibles qu’à vous, aux personnes que vous autorisez et à votre conseillère."]
+    ["Mes données sont-elles en sécurité ?", "Vos données et documents sont stockés de manière chiffrée et ne sont accessibles qu’à vous, aux personnes que vous autorisez et à votre gestionnaire."]
   ]
 };

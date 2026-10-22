@@ -465,7 +465,7 @@ function tLocation(b) {
       <div class="card" style="margin-top:16px"><span class="ctitle">Points à considérer</span><ul class="small" style="margin:8px 0 0;padding-left:18px;line-height:1.8">
         <li>La mise en location fait perdre les avantages liés à l’habitation propre (revenu cadastral exonéré) : le revenu cadastral indexé devient imposable (≈ ${eur(b.rc * 2.2 * 1.4 * Q)}/an avant impôt).</li>
         <li>Le précompte (${eur(b.charges.find(c => c.cat === 'Fiscalité').annuel * Q)}/an) et les assurances (${eur(ch * Q)}/an au total avec le précompte) restent à votre charge.</li>
-        <li>Un relogement ailleurs doit être financé : votre conseillère peut simuler l’ensemble (achat d’un plus petit bien, location, revente).</li></ul></div>`;
+        <li>Un relogement ailleurs doit être financé : votre gestionnaire peut simuler l’ensemble (achat d’un plus petit bien, location, revente).</li></ul></div>`;
   }
   const actu = b.loyersMois(NOWK), pot = b.potentielMois(), occ = b.unites.filter(u => !u.vacant_depuis).length;
   const start = new Date(Math.min(...b.unites.map(u => new Date(u.bail.debut))));
@@ -621,7 +621,7 @@ function simInvest() {
 /* ---------- documents (coffre-fort) ---------- */
 function viewDocs() {
   DOCF = { q: '', bien: '', cat: '' }; later(renderDocList);
-  return `<div class="head"><div><h1>Coffre-fort documents</h1><p class="lead">${ALL_DOCS.length} documents classés par bien et par catégorie : actes, crédits, baux, certificats, assurances, fiscalité.</p></div><span class="demo">${ic('shield')} Stockage chiffré · accès partagé avec votre conseillère</span></div>${docShell(true)}`;
+  return `<div class="head"><div><h1>Coffre-fort documents</h1><p class="lead">${ALL_DOCS.length} documents classés par bien et par catégorie : actes, crédits, baux, certificats, assurances, fiscalité.</p></div><span class="demo">${ic('shield')} Stockage chiffré · accès partagé avec votre gestionnaire</span></div>${docShell(true)}`;
 }
 
 /* ---------- guide d'utilisation (contenu dans guide.js) ---------- */
@@ -658,9 +658,9 @@ function renderSide(r) {
     <a href="#/guide" class="${r.v === 'guide' ? 'on' : ''}">${ic('info')} Guide d’utilisation</a>
     <div class="navlbl">Mes biens</div>
     ${BIENS.map(b => { const h = b.alertes.filter(a => a.niveau === 'haut').length; return `<a href="#/bien/${b.id}" class="${r.id === b.id ? 'on' : ''}"><span class="dot" style="background:var(${b.couleur})"></span>${esc(b.nom)}${h ? `<span class="badge">${h}</span>` : `<span class="cnt">${eurk(b.valeur(TODAY) * q(b))}</span>`}</a>`; }).join('')}
-    <div class="adv"><div class="row"><div class="av">${initials(A.nom)}</div><div><span>Votre conseillère</span><b>${esc(A.nom)}</b></div></div>
+    <div class="adv"><div class="row"><div class="av">${initials(A.nom)}</div><div><span>Votre gestionnaire</span><b>${esc(A.nom)}</b></div></div>
       <div class="btns"><button data-act="advisor">${ic('chat')} Contacter</button><button class="ic" data-act="theme" aria-label="Changer de thème">${ic('moon')}</button></div></div>`;
-  $('#topbar').innerHTML = `<div class="logo" style="width:32px;height:32px;font-size:14px;border-radius:9px">${esc(M.societe[0])}</div><b>${esc(M.produit)}</b><span class="sp"></span><button data-act="theme" aria-label="Changer de thème">${ic('moon')}</button><button data-act="advisor" aria-label="Contacter la conseillère">${ic('chat')}</button>`;
+  $('#topbar').innerHTML = `<div class="logo" style="width:32px;height:32px;font-size:14px;border-radius:9px">${esc(M.societe[0])}</div><b>${esc(M.produit)}</b><span class="sp"></span><button data-act="theme" aria-label="Changer de thème">${ic('moon')}</button><button data-act="advisor" aria-label="Contacter votre gestionnaire">${ic('chat')}</button>`;
   $('#bottombar').innerHTML = [['#/', 'grid', 'Accueil', r.v === 'home'], [null, 'home', 'Biens', r.v === 'bien'], ['#/simulateur', 'sliders', 'Simulateur', r.v === 'sim'], ['#/documents', 'doc', 'Documents', r.v === 'docs'], ['#/guide', 'info', 'Aide', r.v === 'guide']]
     .map(([h, i, l, on]) => h ? `<a href="${h}" class="${on ? 'on' : ''}">${ic(i)}${l}</a>` : `<a href="#" data-act="biens" class="${on ? 'on' : ''}">${ic(i)}${l}</a>`).join('');
 }

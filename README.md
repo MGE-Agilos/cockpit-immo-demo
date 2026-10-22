@@ -6,7 +6,7 @@ Inspiré de l’application MonImmo. **Toutes les données sont fictives et cod�
 Ouvrir `index.html` (double-clic). Une connexion Internet est nécessaire pour les graphiques (Chart.js) et la police.
 
 ## Fichiers
-- `data.js` : marque, client fictif (Olivier Dewaele), conseillère, et 4 biens (Uccle, Gand, Namur, Knokke). C’est le seul fichier à modifier pour adapter la démo (nom de la société, couleurs des biens, montants).
+- `data.js` : marque, client fictif (Natacha Pareto), gestionnaire de patrimoine (Maxime Gerard), et 4 biens (Uccle, Gand, Namur, Knokke). C’est le seul fichier à modifier pour adapter la démo (nom de la société, couleurs des biens, montants).
 - `app.js` : calculs (amortissement, valorisation, loyers, bilans), navigation, vues, graphiques, illustrations SVG des biens.
 - `index.html` : mise en page et styles (thème clair/sombre, mobile, impression).
 
@@ -30,4 +30,4 @@ Pour changer une photo : remplacer le fichier et mettre à jour le champ `photo`
 4. **Appartement Knokke → Location saisonnière** : occupation mensuelle et revenus.
 5. **Simulateur** : hypothèses de marché, patrimoine à la retraite, revente, nouvel investissement.
 6. **Documents** : coffre-fort classé par bien et par catégorie.
-7. Bouton **Contacter** : demande de rendez-vous à la conseillère.
+7. Bouton **Contacter** : demande de rendez-vous à votre gestionnaire.

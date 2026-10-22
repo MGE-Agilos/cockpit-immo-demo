@@ -6,9 +6,9 @@ window.DEMO = {
   // Marque blanche : nom du produit et de la société de gestion de patrimoine
   marque: { produit: "Cockpit Immo", societe: "Pareto", baseline: "Votre patrimoine immobilier, en un coup d’œil" },
 
-  client: { prenom: "Olivier", nom: "Dewaele", naissance: "1974-03-08", retraite: 2039, conjoint: "Anne Mertens", ville: "Uccle", ref: "Dossier PAT-20417" },
+  client: { prenom: "Natacha", nom: "Pareto", naissance: "1974-03-08", retraite: 2039, conjoint: "Anne Mertens", ville: "Uccle", ref: "Dossier PAT-20417" },
 
-  conseiller: { nom: "Julie Lambert", role: "Conseillère patrimoniale senior", tel: "+32 2 000 00 00", email: "julie.lambert@exemple.be", prochain_rdv: "2026-11-18" },
+  conseiller: { nom: "Maxime Gerard", role: "Gestionnaire de patrimoine senior", tel: "+32 2 000 00 00", email: "maxime.gerard@exemple.be", prochain_rdv: "2026-11-18" },
 
   biens: [
     /* ------------------------------------------------------------------ */
@@ -76,7 +76,7 @@ window.DEMO = {
       ],
       alertes: [
         { niveau: "moyen", titre: "Ramonage à planifier avant le 03/11/2026", texte: "Obligation annuelle pour les feux ouverts ; l’attestation est demandée par l’assureur en cas de sinistre." },
-        { niveau: "info", titre: "Photovoltaïque : devis reçu", texte: "16.500 € pour 8 kWc + batterie ; retour estimé 7 à 8 ans. À discuter avec votre conseillère (financement cash ou crédit vert)." }
+        { niveau: "info", titre: "Photovoltaïque : devis reçu", texte: "16.500 € pour 8 kWc + batterie ; retour estimé 7 à 8 ans. À discuter avec votre gestionnaire (financement cash ou crédit vert)." }
       ],
       docs: [
         { d: "2012-06-15", cat: "Acte & achat", n: "Acte authentique de vente", sz: "4,2 Mo" },
@@ -351,7 +351,7 @@ window.DEMO = {
         { date: "2027-03-20", cat: "certificat", titre: "Renouvellement de l’attestation incendie" }
       ],
       alertes: [
-        { niveau: "moyen", titre: "AG du 21/11/2026 : façade côté digue", texte: "Quote-part estimée à 18.400 € (travaux en 2028). À anticiper dans la trésorerie : votre conseillère peut proposer un placement à échéance." },
+        { niveau: "moyen", titre: "AG du 21/11/2026 : façade côté digue", texte: "Quote-part estimée à 18.400 € (travaux en 2028). À anticiper dans la trésorerie : votre gestionnaire peut proposer un placement à échéance." },
         { niveau: "info", titre: "Bien libre de dettes depuis juin 2023", texte: "Il peut servir de garantie pour un futur investissement (crédit avec hypothèque sur ce bien)." }
       ],
       docs: [
